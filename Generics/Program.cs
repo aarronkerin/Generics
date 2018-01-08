@@ -11,44 +11,33 @@ namespace Generics
     {
         static void Main(string[] args)
         {
-            var TeaBagOne = new Teabags();
-            var TeaBagTwo = new Teabags();
-            var TeaBagThree = new Teabags();
-            var TyresFour = new Tyres();
-            var DoughnutOne = new Doughnuts();
-            var DoughnutTwo = new Doughnuts();
-            var AppleOne = new Apple();
-            var AppleTwo = new Apple();
+            List<Apple> myApples = new List<Apple>()
+            {
+                new Apple { colour = "Orange" },
+                new Apple { colour = "Red" },
+                new Apple { colour = "Red" },
+                new Apple { colour = "Red" },
+                new Apple { colour = "Red" },
+                new Apple { colour = "Red" },
+                new Apple { colour = "Red" },
+                new Apple { colour = "Green" },
+                new Apple { colour = "Green" },
+                new Apple { colour = "Green" },
+                new Apple { colour = "Green" },
+                new Apple { colour = "Green" }
+            };
 
-            var BoxOne = new Box<Teabags>();
-            BoxOne.items = new List<Teabags>() { TeaBagOne, TeaBagTwo, TeaBagThree };
+            Counter<Apple> appleCounter = new Counter<Apple>();
+            appleCounter.Add(myApples);
 
-            var BoxTwo = new Box<Doughnuts>();
-            BoxTwo.items = new List<Doughnuts>() { DoughnutOne, DoughnutTwo };
+            Counter<Apple> redAppleCounter = new Counter<Apple>();
+            Func<IEnumerable<Apple>, int> NumberOfRedApples = i => i.Where(a => a.colour == "Red").Count();
+            redAppleCounter.Add(myApples, NumberOfRedApples);
 
-            var BoxThree = new Box<Apple>();
-            BoxThree.items = new List<Apple>() { AppleOne, AppleTwo };
+            Console.WriteLine($"There are {appleCounter.count} apples in the list");
+            Console.WriteLine($"There are {redAppleCounter.count} red apples in the list");
 
-            var CartOne = new Cart();
-            CartOne.boxes = new List<Box>() { BoxOne, BoxTwo };
-
-            var BoxCounter = new Counter<Box>();
-            var CartCounter = new Counter<Cart>();
-            var ItemCounter = new Counter<Tyres>();
-          
-
-            CartCounter.Add(CartOne);
-            BoxCounter.Add(BoxThree);
-            ItemCounter.Add(TyresFour);
-
-            Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-            Console.WriteLine("There are currently " + CartCounter.count + " Items in this cart containing Teabags and Doughnuts. Mmmmmmmmm ");
-            Console.WriteLine("There are also " + BoxCounter.count + " Apples in this box");
-            Console.WriteLine("There are also " + ItemCounter.count +" Spare Tyres for your car");
-            Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             Console.ReadLine();
-
-
         }
     }
 }
